@@ -19,12 +19,13 @@ steps:
     installKubectl: true
 
 - script: |
-    helm repo add kubered https://kubereboot.github.io/charts
+    helm repo add kubereboot https://kubereboot.github.io/charts
     helm repo update 
-    helm repo pull kubered/cured
-    ls -a
+    echo "___________RESULTS1_____________________"
+    helm repo pull kubereboot/cured
+    echo "___________RESULTS2_____________________"
     $folder= pwd
     docker run --tty --volume $folder:/tf --workdir /tf bridgecrew/checkov --directory /tf
-    echo "___________RESULTS_____________________"
+    echo "___________RESULTS3_____________________"
     ls -a
   displayName: 'Run a multi-line script'
