@@ -1,0 +1,28 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- task: HelmInstaller@0
+  inputs:
+    helmVersion: '3.x'
+    installKubectl: true
+
+- script: |
+    helm repo add kubered https://kubereboot.github.io/charts
+    helm repo update kubered
+    helm repo update kubered
+    helm repo pull kubered/cured
+    $folder= pwd
+    docker run --tty --volume $folder:/tf --workdir /tf bridgecrew/checkov --directory /tf
+  displayName: 'Run a multi-line script'
