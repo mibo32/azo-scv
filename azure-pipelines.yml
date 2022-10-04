@@ -21,11 +21,8 @@ steps:
 - script: |
     helm repo add kubereboot https://kubereboot.github.io/charts
     helm repo update 
-    echo "___________RESULTS1_____________________"
-    helm repo pull kubereboot/cured
-    echo "___________RESULTS2_____________________"
+    helm pull kubereboot/cured
     $folder= pwd
     docker run --tty --volume $folder:/tf --workdir /tf bridgecrew/checkov --directory /tf
-    echo "___________RESULTS3_____________________"
     ls -a
   displayName: 'Run a multi-line script'
