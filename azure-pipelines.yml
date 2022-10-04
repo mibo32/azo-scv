@@ -29,3 +29,10 @@ steps:
     # docker run --tty --volume $folder:/tf --workdir /tf bridgecrew/checkov --directory /tf
     ls -a
   displayName: 'Run a multi-line script'
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '**/*Checkov-Report.xml'
+    testRunTitle: 'Checkov Tests'
+    failTaskOnFailedTests: true
