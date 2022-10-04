@@ -24,6 +24,8 @@ steps:
     helm pull kubereboot/kured
     folder=$(pwd)
     echo $folder
-    docker run --tty --volume $folder:/tf --workdir /tf bridgecrew/checkov --directory /tf
+    docker pull bridgecrew/checkov
+    docker run --tty --volume $(System.DefaultWorkingDirectory):/tf --workdir /tf bridgecrew/checkov --directory /tf --output junitxml > $(System.DefaultWorkingDirectory)/Checkov-Report.xml
+    # docker run --tty --volume $folder:/tf --workdir /tf bridgecrew/checkov --directory /tf
     ls -a
   displayName: 'Run a multi-line script'
