@@ -21,7 +21,7 @@ steps:
 - script: |
     helm repo add kubereboot https://kubereboot.github.io/charts
     helm repo update 
-    helm pull kubereboot/cured
+    helm pull kubereboot/kured
     $folder= pwd
     docker run --tty --volume $folder:/tf --workdir /tf bridgecrew/checkov --directory /tf
     ls -a
