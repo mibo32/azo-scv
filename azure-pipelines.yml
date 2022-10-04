@@ -26,8 +26,10 @@ steps:
     echo $folder
     docker pull bridgecrew/checkov
     docker run --tty --volume $(System.DefaultWorkingDirectory):/tf --workdir /tf bridgecrew/checkov --directory /tf --output junitxml > $(System.DefaultWorkingDirectory)/Checkov-Report.xml
+    sed -i '$ d'  $(System.DefaultWorkingDirectory)/Checkov-Report.xml
+    sed -i '$ d'  $(System.DefaultWorkingDirectory)/Checkov-Report.xml
     # docker run --tty --volume $folder:/tf --workdir /tf bridgecrew/checkov --directory /tf
-    ls -a
+    cat Checkov-Report.xml
   displayName: 'Run a multi-line script'
 - task: PublishTestResults@2
   condition: succeededOrFailed()
