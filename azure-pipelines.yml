@@ -26,12 +26,19 @@ steps:
     echo $folder
     tar zxvf kured-4.0.2.tgz
     docker pull bridgecrew/checkov
-    docker run --tty --volume $(System.DefaultWorkingDirectory):/tf --workdir /tf bridgecrew/checkov --directory /tf --output junitxml > $(System.DefaultWorkingDirectory)/Checkov-Report.xml
+    docker run --tty --volume $(System.DefaultWorkingDirectory):/tf --workdir /tf bridgecrew/checkov --directory /tf --output junitxml -o sarif -o github_failed_only > $(System.DefaultWorkingDirectory)/Checkov-Report.xml
     sed -i '$ d'  $(System.DefaultWorkingDirectory)/Checkov-Report.xml
     sed -i '$ d'  $(System.DefaultWorkingDirectory)/Checkov-Report.xml
     # docker run --tty --volume $folder:/tf --workdir /tf bridgecrew/checkov --directory /tf
     cat Checkov-Report.xml
   displayName: 'Run a multi-line script'
+  
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(System.DefaultWorkingDirectory)'
+    artifact: 'results'
+    publishLocation: 'pipeline'
+
 - task: PublishTestResults@2
   condition: succeededOrFailed()
   inputs:
