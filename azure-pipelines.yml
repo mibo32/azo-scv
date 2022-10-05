@@ -7,7 +7,7 @@ trigger:
 - main
 
 pool:
-  vmImage: ubuntu-latest
+  name: AksServices
 
 steps:
 - script: echo Hello, world!
