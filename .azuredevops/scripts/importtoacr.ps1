@@ -9,7 +9,7 @@ foreach ($i in $dependencies){
 helm repo update 
 
 
-Write-Output "______________________________" + $HelmScanninFolder
+Write-Output  $HelmScanninFolder
 foreach ($i in $dependencies){
     $reponame = $i.name
     foreach ($c in $i.charts){
