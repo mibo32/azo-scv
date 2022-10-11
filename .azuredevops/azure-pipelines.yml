@@ -32,7 +32,7 @@ steps:
   displayName: "Pull and scan HelmCharts"
   inputs:
     filePath: './.azuredevops/scripts/importtoacr.ps1'
-    workingDirectory: $(HelmCharts
+    workingDirectory: $(HelmCharts)
 
 # - script: |
 #     helm repo add kubereboot https://kubereboot.github.io/charts
