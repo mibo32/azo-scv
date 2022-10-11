@@ -1,3 +1,6 @@
+param(
+    [String] $HelmScanningFolder
+  )
 $dependencies = Get-Content ..\dependencies.json -Raw | ConvertFrom-Json
 
 foreach ($i in $dependencies){
@@ -5,9 +8,8 @@ foreach ($i in $dependencies){
 }
 helm repo update 
 
-$helmScanning = $env:HelmScanning
 
-Write-Output "______________________________" + $helmScanning
+Write-Output "______________________________" + $HelmScanninFolder
 foreach ($i in $dependencies){
     $reponame = $i.name
     foreach ($c in $i.charts){
@@ -19,17 +21,17 @@ foreach ($i in $dependencies){
         # tar zxvf $chartName + "-" + $chartTag + ".tgz"
     }
 }
-md $helmScanning
+md $HelmScanninFolder
 
 Get-ChildItem . -Filter *.tgz | Foreach-Object {
     Write-Output $_.FullName
-    tar zxvf $_.FullName -C $helmScanning
+    tar zxvf $_.FullName -C $HelmScanningFolder
 }
 
 docker pull bridgecrew/checkov
 $path = pwd
-docker run --tty --volume ($helmScanning):/tf --workdir /tf bridgecrew/checkov --directory /tf --output junitxml
-$files = Get-ChildItem $helmScanning 
+docker run --tty --volume ($HelmScanninFolder):/tf --workdir /tf bridgecrew/checkov --directory /tf --output junitxml
+$files = Get-ChildItem $HelmScanninFolder 
 
 foreach ($file in $files){
       Write-Output $file.fullName
