@@ -1,4 +1,4 @@
-$dependencies = Get-Content .\dependencies.json -Raw | ConvertFrom-Json
+$dependencies = Get-Content ..\..\dependencies.json -Raw | ConvertFrom-Json
 
 foreach ($i in $dependencies){
     helm repo add $i.name $i.repo
@@ -17,13 +17,19 @@ foreach ($i in $dependencies){
         # tar zxvf $chartName + "-" + $chartTag + ".tgz"
     }
 }
-md untaredCharts
+md $(HelmScanning)
 
 Get-ChildItem . -Filter *.tgz | Foreach-Object {
     Write-Output $_.FullName
-    tar zxvf $_.FullName -C ./untaredCharts
+    tar zxvf $_.FullName -C $(HelmScanning)
 }
 
 docker pull bridgecrew/checkov
 $path = pwd
-docker run --tty --volume $path/untaredCharts:/tf --workdir /tf bridgecrew/checkov --directory /tf --output junitxml --skip-download
+docker run --tty --volume $(HelmScanning):/tf --workdir /tf bridgecrew/checkov --directory /tf --output junitxml --skip-download
+
+$files = Get-ChildItem $(HelmScanning)
+
+foreach ($file in $files){
+    start-process -FilePath $file.fullName -Verb Print
+}

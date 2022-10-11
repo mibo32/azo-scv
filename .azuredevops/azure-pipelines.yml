@@ -9,9 +9,11 @@ trigger:
 pool:
   name: AksServices
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+variables:
+- name: HelmScanning
+  value: $(System.DefaultWorkingDirectory)/checkov
+- name: HelmCHarts
+  value: $(System.DefaultWorkingDirectory)/helmcharts
 
 - task: HelmInstaller@0
   inputs:
@@ -21,21 +23,22 @@ steps:
 - task: PowerShell@2
   displayName: "Pull and scan HelmCharts"
   inputs:
-    filePath: './.azuredevops/scripts/importtoacrps1'
+    filePath: './.azuredevops/scripts/importtoacr.ps1'
+    workingDirectory: $(HelmCHarts)
 
-- script: |
-    helm repo add kubereboot https://kubereboot.github.io/charts
-    helm repo update 
-    helm pull kubereboot/kured
-    folder=$(pwd)
-    echo $folder
-    tar zxvf kured-4.0.2.tgz
-    docker pull bridgecrew/checkov
-    docker run --tty --volume $(System.DefaultWorkingDirectory):/tf --workdir /tf bridgecrew/checkov --directory /tf --output junitxml -o sarif -o github_failed_only > $(System.DefaultWorkingDirectory)/Checkov-Report.xml
-    sed -i '$ d'  $(System.DefaultWorkingDirectory)/Checkov-Report.xml
-    sed -i '$ d'  $(System.DefaultWorkingDirectory)/Checkov-Report.xml
-    # docker run --tty --volume $folder:/tf --workdir /tf bridgecrew/checkov --directory /tf
-    cat Checkov-Report.xml
+# - script: |
+#     helm repo add kubereboot https://kubereboot.github.io/charts
+#     helm repo update 
+#     helm pull kubereboot/kured
+#     folder=$(pwd)
+#     echo $folder
+#     tar zxvf kured-4.0.2.tgz
+#     docker pull bridgecrew/checkov
+#     docker run --tty --volume $(System.DefaultWorkingDirectory):/tf --workdir /tf bridgecrew/checkov --directory /tf --output junitxml -o sarif -o github_failed_only > $(System.DefaultWorkingDirectory)/Checkov-Report.xml
+#     sed -i '$ d'  $(System.DefaultWorkingDirectory)/Checkov-Report.xml
+#     sed -i '$ d'  $(System.DefaultWorkingDirectory)/Checkov-Report.xml
+#     # docker run --tty --volume $folder:/tf --workdir /tf bridgecrew/checkov --directory /tf
+#     cat Checkov-Report.xml
   displayName: 'Run a multi-line script'
   
 - task: PublishPipelineArtifact@1
