@@ -5,7 +5,7 @@ foreach ($i in $dependencies){
 }
 helm repo update 
 
-
+$helmScanning = $env:HelmScanning
 foreach ($i in $dependencies){
     $reponame = $i.name
     foreach ($c in $i.charts){
@@ -17,18 +17,18 @@ foreach ($i in $dependencies){
         # tar zxvf $chartName + "-" + $chartTag + ".tgz"
     }
 }
-md $(HelmScanning)
+md $helmScanning
 
 Get-ChildItem . -Filter *.tgz | Foreach-Object {
     Write-Output $_.FullName
-    tar zxvf $_.FullName -C $(HelmScanning)
+    tar zxvf $_.FullName -C $helmScanning
 }
 
 docker pull bridgecrew/checkov
 $path = pwd
-docker run --tty --volume $(HelmScanning):/tf --workdir /tf bridgecrew/checkov --directory /tf --output junitxml --skip-download
+docker run --tty --volume $helmScanning:/tf --workdir /tf bridgecrew/checkov --directory /tf --output junitxml --skip-download
 
-$files = Get-ChildItem $(HelmScanning)
+$files = Get-ChildItem $helmScanning
 
 foreach ($file in $files){
     start-process -FilePath $file.fullName -Verb Print
