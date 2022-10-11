@@ -24,10 +24,15 @@ steps:
     installKubectl: true
 
 - task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: 'md $(HelmCHarts)'
+
+- task: PowerShell@2
   displayName: "Pull and scan HelmCharts"
   inputs:
     filePath: './.azuredevops/scripts/importtoacr.ps1'
-    workingDirectory: $(HelmCHarts)
+    workingDirectory: 
 
 # - script: |
 #     helm repo add kubereboot https://kubereboot.github.io/charts
