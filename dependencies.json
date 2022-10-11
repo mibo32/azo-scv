@@ -1,0 +1,12 @@
+[
+    {
+        "repo": "https://kubereboot.github.io/charts",
+        "name": "kubereboot",
+        "charts": [
+            {
+                "name": "kured",
+                "tag": "4.0.2"
+            }
+        ]
+    }
+]
