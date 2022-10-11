@@ -39,7 +39,7 @@ variables:
 #     sed -i '$ d'  $(System.DefaultWorkingDirectory)/Checkov-Report.xml
 #     # docker run --tty --volume $folder:/tf --workdir /tf bridgecrew/checkov --directory /tf
 #     cat Checkov-Report.xml
-  displayName: 'Run a multi-line script'
+#   displayName: 'Run a multi-line script'
   
 - task: PublishPipelineArtifact@1
   inputs:
