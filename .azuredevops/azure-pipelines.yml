@@ -15,7 +15,7 @@ pool:
 variables:
 - name: HelmScanning
   value: $(System.DefaultWorkingDirectory)/checkov
-- name: HelmCHarts
+- name: HelmCharts
   value: $(System.DefaultWorkingDirectory)/helmcharts
 steps:
 - task: HelmInstaller@0
@@ -26,13 +26,13 @@ steps:
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
-    script: 'md $(HelmCHarts)'
+    script: 'md $(HelmCharts)'
 
 - task: PowerShell@2
   displayName: "Pull and scan HelmCharts"
   inputs:
     filePath: './.azuredevops/scripts/importtoacr.ps1'
-    workingDirectory: 
+    workingDirectory: $(HelmCharts)
 
 # - script: |
 #     helm repo add kubereboot https://kubereboot.github.io/charts
