@@ -18,6 +18,11 @@ steps:
     helmVersion: '3.x'
     installKubectl: true
 
+- task: PowerShell@2
+  displayName: "Pull and scan HelmCharts"
+  inputs:
+    filePath: './.azuredevops/scripts/importtoacrps1'
+
 - script: |
     helm repo add kubereboot https://kubereboot.github.io/charts
     helm repo update 
