@@ -14,7 +14,7 @@ variables:
   value: $(System.DefaultWorkingDirectory)/checkov
 - name: HelmCHarts
   value: $(System.DefaultWorkingDirectory)/helmcharts
-
+steps:
 - task: HelmInstaller@0
   inputs:
     helmVersion: '3.x'
