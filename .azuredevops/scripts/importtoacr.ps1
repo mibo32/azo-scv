@@ -30,5 +30,5 @@ docker run --tty --volume ($helmScanning):/tf --workdir /tf bridgecrew/checkov -
 $files = Get-ChildItem $helmScanning 
 
 foreach ($file in $files){
-    start-process -FilePath $file.fullName -Verb Print
+      Write-Output $file.fullName
 }
