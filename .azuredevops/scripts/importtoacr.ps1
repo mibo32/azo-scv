@@ -6,6 +6,8 @@ foreach ($i in $dependencies){
 helm repo update 
 
 $helmScanning = $env:HelmScanning
+
+Write-Output "______________________________" + $helmScanning
 foreach ($i in $dependencies){
     $reponame = $i.name
     foreach ($c in $i.charts){
