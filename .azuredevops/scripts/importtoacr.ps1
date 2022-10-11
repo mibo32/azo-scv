@@ -26,9 +26,9 @@ Get-ChildItem . -Filter *.tgz | Foreach-Object {
 
 docker pull bridgecrew/checkov
 $path = pwd
-docker run --tty --volume $helmScanning:/tf --workdir /tf bridgecrew/checkov --directory /tf --output junitxml --skip-download
+docker run --tty --volume ($helmScanning):/tf --workdir /tf bridgecrew/checkov --directory /tf --output junitxml --skip-download
 
-$files = Get-ChildItem $helmScanning
+$files = Get-ChildItem $helmScanning 
 
 foreach ($file in $files){
     start-process -FilePath $file.fullName -Verb Print
