@@ -11,7 +11,7 @@ foreach ($i in $dependencies){
     foreach ($c in $i.charts){
         $chartName = $c.name
         $chartTag = $c.tag
-        $command = "" + $reponame + "/"+ $chartName + " --version " + $c.tag 
+        $command = "" + $reponame + "/"+ $chartName #+ " --version " + $c.tag 
         Write-Output  $command
         helm pull $command
         # tar zxvf $chartName + "-" + $chartTag + ".tgz"
@@ -26,8 +26,7 @@ Get-ChildItem . -Filter *.tgz | Foreach-Object {
 
 docker pull bridgecrew/checkov
 $path = pwd
-docker run --tty --volume ($helmScanning):/tf --workdir /tf bridgecrew/checkov --directory /tf --output junitxml --skip-download
-
+docker run --tty --volume ($helmScanning):/tf --workdir /tf bridgecrew/checkov --directory /tf --output junitxml
 $files = Get-ChildItem $helmScanning 
 
 foreach ($file in $files){
