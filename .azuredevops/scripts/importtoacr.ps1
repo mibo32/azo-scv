@@ -1,4 +1,4 @@
-$dependencies = Get-Content ..\..\dependencies.json -Raw | ConvertFrom-Json
+$dependencies = Get-Content $(System.DefaultWorkingDirectory)\dependencies.json -Raw | ConvertFrom-Json
 
 foreach ($i in $dependencies){
     helm repo add $i.name $i.repo
