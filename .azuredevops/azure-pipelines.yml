@@ -6,8 +6,11 @@
 trigger:
 - main
 
-pool:
-  name: AksServices
+# pool:
+#   name: AksServices
+
+ pool:
+    vmImage: 'ubuntu-latest'
 
 variables:
 - name: HelmScanning
