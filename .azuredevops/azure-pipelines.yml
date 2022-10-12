@@ -55,13 +55,12 @@ stages:
 
   - stage: "Push"
     displayName: Push to ACR
-    condition: succeeded()
     jobs:
     - deployment: ACR
       environment: prod
       pool:
         name: AksServices
-    - job:
+    - job: push
       steps:
       - download: current
         artifact: results
@@ -69,12 +68,13 @@ stages:
           ls -a
           az login --identity
           #az acr login --name $(acrRegistryName) --subscription $(acrSubscription) -g $(acrResourceGroup)
-        displayName: "Login to $(acrRegistryName)"
+        displayName: "Login to ACR"
+        workingDirectory:  $(Pipeline.Workspace)/results
       - script: |
           for FILE in *
           do 
             echo $FILE
-            helm push $FILE oci://$(acrRegistryName).azurecr.io/helm
+            #helm push $FILE oci://$(acrRegistryName).azurecr.io/helm
           done
         displayName: "Helm push"
         workingDirectory:  $(Pipeline.Workspace)/results
