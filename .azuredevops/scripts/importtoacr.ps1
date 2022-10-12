@@ -25,7 +25,7 @@ md $HelmScanninFolder
 
 Get-ChildItem . -Filter *.tgz | Foreach-Object {
     Write-Output $_.FullName
-    tar zxvf $_.FullName -C $HelmScanningFolder
+    tar zxvf $_.FullName -C $HelmScanninFolder
 }
 
 docker pull bridgecrew/checkov
