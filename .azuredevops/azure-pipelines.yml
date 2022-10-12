@@ -18,8 +18,8 @@ variables:
 - name: HelmCharts
   value: $(System.DefaultWorkingDirectory)/helmcharts
 stages:
-  - stage: "Build"
-    displayName: Build and package
+  - stage: "PullScan"
+    displayName: Pull and Scan
     condition: succeeded()
     jobs:
     - job:
@@ -42,7 +42,7 @@ stages:
         
       - task: PublishPipelineArtifact@1
         inputs:
-          targetPath: '$(System.DefaultWorkingDirectory)'
+          targetPath: '$(HelmCharts)'
           artifact: 'results'
           publishLocation: 'pipeline'
 
@@ -53,6 +53,15 @@ stages:
           testResultsFiles: '**/*Checkov-Report.xml'
           testRunTitle: 'Checkov Tests'
           failTaskOnFailedTests: true
+
+  - stage: "Push"
+    displayName: Push to ACR
+    condition: succeeded()
+    jobs:
+    - job:
+      steps:
+      - script: |
+          echo "push to acr" 
 
 # - script: |
 #     helm repo add kubereboot https://kubereboot.github.io/charts
