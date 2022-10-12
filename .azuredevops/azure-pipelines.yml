@@ -55,9 +55,8 @@ stages:
     displayName: Push to ACR
     variables:
       acrRegistryName: 'craksservicessharedweu'
-      acrSubscription: 'rg-aksservices-shared-weu'
-      acrResourceGroup: 'sub-shared'
-
+      acrSubscription: 'sub-shared'
+      acrResourceGroup: 'rg-aksservices-shared-weu'
 
     jobs: 
       - deployment: PushAcr
