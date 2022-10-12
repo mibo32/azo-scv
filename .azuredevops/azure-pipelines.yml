@@ -45,12 +45,13 @@ stages:
           publishLocation: 'pipeline'
 
       - task: PublishTestResults@2
-        condition: succeededOrFailed()
+        continueOnError: true
         inputs:
           testResultsFormat: 'JUnit'
           testResultsFiles: '**/*results_junitxml.xml'
           testRunTitle: 'Checkov Tests'
-          failTaskOnFailedTests: false
+          failTaskOnFailedTests: true
+
 
   - stage: "Push"
     displayName: Push to ACR
