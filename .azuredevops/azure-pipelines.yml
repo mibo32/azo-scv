@@ -39,7 +39,7 @@ stages:
           workingDirectory: '$(HelmCharts)'
       
       - script: |
-          cat $HelmScanning/Report.xml
+          cat $(HelmScanning)/Report.xml
         displayName: 'Test' 
 
       - task: PublishPipelineArtifact@1
