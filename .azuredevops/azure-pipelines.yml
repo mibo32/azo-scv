@@ -35,7 +35,8 @@ stages:
         displayName: "Pull and scan HelmCharts"
         inputs:
           filePath: './.azuredevops/scripts/importtoacr.ps1'
-          workingDirectory: $(HelmCharts)
+          arguments: '-HelmScanninFolder $(HelmScanning)'
+          workingDirectory: '$(HelmCharts)'
         
       - task: PublishPipelineArtifact@1
         inputs:
