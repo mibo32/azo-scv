@@ -48,7 +48,7 @@ stages:
         condition: succeededOrFailed()
         inputs:
           testResultsFormat: 'JUnit'
-          testResultsFiles: '**/*Checkov-Report.xml'
+          testResultsFiles: '**/*Report.xml'
           testRunTitle: 'Checkov Tests'
           failTaskOnFailedTests: true
 
