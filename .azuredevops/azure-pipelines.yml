@@ -63,7 +63,7 @@ stages:
         name: AksServices
     - job:
       steps:
-      - download: results
+      - download: current
       - script: |
           ls -a
           az login --identity
