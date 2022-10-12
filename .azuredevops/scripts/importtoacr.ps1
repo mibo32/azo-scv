@@ -29,12 +29,11 @@ Get-ChildItem . -Filter *.tgz | Foreach-Object {
 }
 
 docker pull bridgecrew/checkov
-
-Write-Output "($HelmScanninFolder)":/tf
-
 docker run --tty --volume ${HelmScanninFolder}:/tf --workdir /tf bridgecrew/checkov --directory /tf --output junitxml > $HelmScanninFolder/Checkov-Report.xml
-$files = Get-ChildItem $HelmScanninFolder 
 
+$files = Get-ChildItem $HelmScanninFolder 
 foreach ($file in $files){
       Write-Output $file.fullName
 }
+
+exit 0
