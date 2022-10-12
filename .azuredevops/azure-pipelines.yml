@@ -23,22 +23,36 @@ stages:
     condition: succeeded()
     jobs:
     - job:
-        steps:
-        - task: HelmInstaller@0
-          inputs:
-            helmVersion: '3.x'
-            installKubectl: true
+      steps:
+      - task: HelmInstaller@0
+        inputs:
+          helmVersion: '3.x'
+          installKubectl: true
 
-        - task: PowerShell@2
-          inputs:
-            targetType: 'inline'
-            script: 'md $(HelmCharts)'
+      - task: PowerShell@2
+        inputs:
+          targetType: 'inline'
+          script: 'md $(HelmCharts)'
 
-        - task: PowerShell@2
-          displayName: "Pull and scan HelmCharts"
-          inputs:
-            filePath: './.azuredevops/scripts/importtoacr.ps1'
-            workingDirectory: $(HelmCharts)
+      - task: PowerShell@2
+        displayName: "Pull and scan HelmCharts"
+        inputs:
+          filePath: './.azuredevops/scripts/importtoacr.ps1'
+          workingDirectory: $(HelmCharts)
+        
+      - task: PublishPipelineArtifact@1
+        inputs:
+          targetPath: '$(System.DefaultWorkingDirectory)'
+          artifact: 'results'
+          publishLocation: 'pipeline'
+
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        inputs:
+          testResultsFormat: 'JUnit'
+          testResultsFiles: '**/*Checkov-Report.xml'
+          testRunTitle: 'Checkov Tests'
+          failTaskOnFailedTests: true
 
 # - script: |
 #     helm repo add kubereboot https://kubereboot.github.io/charts
@@ -55,16 +69,4 @@ stages:
 #     cat Checkov-Report.xml
 #   displayName: 'Run a multi-line script'
   
-- task: PublishPipelineArtifact@1
-  inputs:
-    targetPath: '$(System.DefaultWorkingDirectory)'
-    artifact: 'results'
-    publishLocation: 'pipeline'
 
-- task: PublishTestResults@2
-  condition: succeededOrFailed()
-  inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '**/*Checkov-Report.xml'
-    testRunTitle: 'Checkov Tests'
-    failTaskOnFailedTests: true
