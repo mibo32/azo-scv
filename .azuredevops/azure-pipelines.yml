@@ -53,42 +53,46 @@ stages:
           testRunTitle: 'Checkov Tests'
           failTaskOnFailedTests: true
 
+
   - stage: "Push"
     displayName: Push to ACR
-    jobs:
-    - job: push
-      pool:
-        name: AksServices
-      steps:
-      - download: current
-        artifact: results
-      - script: |
-          ls -a
-          az login --identity
-          #az acr login --name $(acrRegistryName) --subscription $(acrSubscription) -g $(acrResourceGroup)
-        displayName: "Login to ACR"
-        workingDirectory:  $(Pipeline.Workspace)/results
-      - script: |
-          for FILE in *
-          do 
-            echo $FILE
-            #helm push $FILE oci://$(acrRegistryName).azurecr.io/helm
-          done
-        displayName: "Helm push"
-        workingDirectory:  $(Pipeline.Workspace)/results
-# - script: |
-#     helm repo add kubereboot https://kubereboot.github.io/charts
-#     helm repo update 
-#     helm pull kubereboot/kured
-#     folder=$(pwd)
-#     echo $folder
-#     tar zxvf kured-4.0.2.tgz
-#     docker pull bridgecrew/checkov
-#     docker run --tty --volume $(System.DefaultWorkingDirectory):/tf --workdir /tf bridgecrew/checkov --directory /tf --output junitxml -o sarif -o github_failed_only > $(System.DefaultWorkingDirectory)/Checkov-Report.xml
-#     sed -i '$ d'  $(System.DefaultWorkingDirectory)/Checkov-Report.xml
-#     sed -i '$ d'  $(System.DefaultWorkingDirectory)/Checkov-Report.xml
-#     # docker run --tty --volume $folder:/tf --workdir /tf bridgecrew/checkov --directory /tf
-#     cat Checkov-Report.xml
-#   displayName: 'Run a multi-line script'
+    jobs: 
+      - deployment: PushAcr
+        displayName: Push to ACR 
+        environment: sub-prod
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+              - download: current
+                artifact: results
+              - script: |
+                  ls -a
+                  az login --identity
+                  #az acr login --name $(acrRegistryName) --subscription $(acrSubscription) -g $(acrResourceGroup)
+                displayName: "Login to ACR"
+                workingDirectory:  $(Pipeline.Workspace)/results
+              - script: |
+                  for FILE in *
+                  do 
+                    echo $FILE
+                    #helm push $FILE oci://$(acrRegistryName).azurecr.io/helm
+                  done
+                displayName: "Helm push"
+                workingDirectory:  $(Pipeline.Workspace)/results
+        # - script: |
+        #     helm repo add kubereboot https://kubereboot.github.io/charts
+        #     helm repo update 
+        #     helm pull kubereboot/kured
+        #     folder=$(pwd)
+        #     echo $folder
+        #     tar zxvf kured-4.0.2.tgz
+        #     docker pull bridgecrew/checkov
+        #     docker run --tty --volume $(System.DefaultWorkingDirectory):/tf --workdir /tf bridgecrew/checkov --directory /tf --output junitxml -o sarif -o github_failed_only > $(System.DefaultWorkingDirectory)/Checkov-Report.xml
+        #     sed -i '$ d'  $(System.DefaultWorkingDirectory)/Checkov-Report.xml
+        #     sed -i '$ d'  $(System.DefaultWorkingDirectory)/Checkov-Report.xml
+        #     # docker run --tty --volume $folder:/tf --workdir /tf bridgecrew/checkov --directory /tf
+        #     cat Checkov-Report.xml
+        #   displayName: 'Run a multi-line script'
   
 
