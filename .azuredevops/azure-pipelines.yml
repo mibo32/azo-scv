@@ -57,7 +57,7 @@ stages:
     displayName: Push to ACR
     condition: succeeded()
     jobs:
-    - deployment: DeployWeb
+    - deployment: ACR
       environment: prod
       pool:
         name: AksServices
