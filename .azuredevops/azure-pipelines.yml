@@ -38,10 +38,6 @@ stages:
           arguments: '-HelmScanninFolder $(HelmScanning)'
           workingDirectory: '$(HelmCharts)'
       
-      - script: |
-          cat $(HelmScanning)/Report.xml
-        displayName: 'Test' 
-
       - task: PublishPipelineArtifact@1
         inputs:
           targetPath: '$(HelmCharts)'
@@ -52,7 +48,7 @@ stages:
         condition: succeededOrFailed()
         inputs:
           testResultsFormat: 'JUnit'
-          testResultsFiles: '**/*Report.xml'
+          testResultsFiles: '**/*results_junitxml.xml'
           testRunTitle: 'Checkov Tests'
           failTaskOnFailedTests: true
 
