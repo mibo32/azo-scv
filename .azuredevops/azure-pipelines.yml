@@ -6,8 +6,7 @@
 trigger:
 - main
 
-# pool:
-#   name: AksServices
+
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -61,10 +60,10 @@ stages:
     - deployment: DeployWeb
       environment: prod
       pool:
-        vmImage: 'Ubuntu-latest'
+        name: AksServices
     - job:
       steps:
-      - download: none
+      - download: result
       - script: |
           ls -a
           az login --identity
