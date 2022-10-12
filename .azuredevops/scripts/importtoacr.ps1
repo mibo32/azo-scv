@@ -29,7 +29,7 @@ Get-ChildItem . -Filter *.tgz | Foreach-Object {
 }
 
 docker pull bridgecrew/checkov
-docker run --tty --volume ${HelmScanninFolder}:/tf --workdir /tf bridgecrew/checkov --directory /tf --output junitxml > $HelmScanninFolder/Checkov-Report.xml
+docker run --tty --volume ${HelmScanninFolder}:/tf --workdir /tf bridgecrew/checkov --directory /tf --output junitxml #> $HelmScanninFolder/Checkov-Report.xml
 
 $files = Get-ChildItem $HelmScanninFolder 
 foreach ($file in $files){
