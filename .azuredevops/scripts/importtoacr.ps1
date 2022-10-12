@@ -1,5 +1,5 @@
 param(
-    [String] $HelmScanningFolder
+    [String] $HelmScanninFolder
   )
 $dependencies = Get-Content ..\dependencies.json -Raw | ConvertFrom-Json
 
@@ -21,6 +21,7 @@ foreach ($i in $dependencies){
         # tar zxvf $chartName + "-" + $chartTag + ".tgz"
     }
 }
+Write-Output $_.FullName
 md $HelmScanninFolder
 
 Get-ChildItem . -Filter *.tgz | Foreach-Object {
