@@ -56,11 +56,9 @@ stages:
   - stage: "Push"
     displayName: Push to ACR
     jobs:
-    - deployment: ACR
-      environment: prod
+    - job: push
       pool:
         name: AksServices
-    - job: push
       steps:
       - download: current
         artifact: results
