@@ -21,7 +21,6 @@ foreach ($i in $dependencies){
         # tar zxvf $chartName + "-" + $chartTag + ".tgz"
     }
 }
-Write-Output $_.FullName
 md $HelmScanninFolder
 
 Get-ChildItem . -Filter *.tgz | Foreach-Object {
@@ -30,6 +29,9 @@ Get-ChildItem . -Filter *.tgz | Foreach-Object {
 }
 
 docker pull bridgecrew/checkov
+
+Write-Output "($HelmScanninFolder)":/tf
+
 docker run --tty --volume "($HelmScanninFolder)":/tf --workdir /tf bridgecrew/checkov --directory /tf --output junitxml > $HelmScanninFolder/Checkov-Report.xml
 $files = Get-ChildItem $HelmScanninFolder 
 
