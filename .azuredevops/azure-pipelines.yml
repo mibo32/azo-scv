@@ -64,9 +64,14 @@ stages:
         vmImage: 'Ubuntu-latest'
     - job:
       steps:
+      - download: none
       - script: |
-          echo "push to acr" 
-
+          az login --identity
+          az acr login --name $(acrRegistryName) --subscription $(acrSubscription) -g $(acrResourceGroup)
+        displayName: "Login to $(acrRegistryName)"
+      - script: |
+          helm push $(Build.ArtifactStagingDirectory)/$(imageName)-$(tag).tgz oci://$(acrRegistryName).azurecr.io/$(acrFolder)/helm
+        displayName: "Helm push"
 # - script: |
 #     helm repo add kubereboot https://kubereboot.github.io/charts
 #     helm repo update 
