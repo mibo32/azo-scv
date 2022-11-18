@@ -6,7 +6,7 @@
 # YAML file in the main branch
 schedules:
 - cron: '0 17 * * 1-5'
-  displayName: Daily midnight build
+  displayName: Stop AKS TestPreprod
   branches:
     include:
     - main
