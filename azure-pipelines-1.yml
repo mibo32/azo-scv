@@ -1,0 +1,32 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+# YAML file in the main branch
+schedules:
+- cron: '0 17 * * 1-5'
+  displayName: Stop AKS TestPreprod
+  always: true
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: AzureCLI@2
+  displayName: Start AKS Test
+  inputs:
+    azureSubscription: 'spn-azure-test-subscription-contributor'
+    scriptType: 'ps'
+    scriptLocation: 'inlineScript'
+    inlineScript: ''
+    # inlineScript: 'az aks start --name aks-aksservices-test-weu --resource-group rg-aksservices-test-weu'
+  
+- task: AzureCLI@2
+  displayName: Start AKS Preprod
+  inputs:
+    azureSubscription: 'spn-azure-preprod-subscription-contributor'
+    scriptType: 'ps'
+    scriptLocation: 'inlineScript'
+    inlineScript: ''
+    # inlineScript: 'az aks start --name aks-aksservices-preprod-weu --resource-group rg-aksservices-preprod-weu'
