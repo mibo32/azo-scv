@@ -5,7 +5,7 @@
 
 # YAML file in the main branch
 schedules:
-- cron: '0 17 * * 1-5'
+- cron: '0 6 * * 1-5'
   displayName: Stop AKS TestPreprod
   branches:
     include:
