@@ -4,6 +4,11 @@
 # https://aka.ms/yaml
 
 # YAML file in the main branch
+
+
+pool:
+  name: AzureDeploy
+
 schedules:
 - cron: '0 5 * * 1-5'
   displayName: Stop AKS TestPreprod
@@ -12,24 +17,21 @@ schedules:
     - main
   always: true
 
-pool:
-  vmImage: ubuntu-latest
-
 steps:
 - task: AzureCLI@2
   displayName: Start AKS Test
   inputs:
     azureSubscription: 'spn-azure-test-subscription-contributor'
-    scriptType: 'batch'
+    scriptType: 'ps'
     scriptLocation: 'inlineScript'
-    inlineScript: 'echo "starting-aks cluster Test"'
+    inlineScript: 'Write-Host "starting-aks cluster Test"'
     # inlineScript: 'az aks start --name aks-aksservices-test-weu --resource-group rg-aksservices-test-weu'
   
 - task: AzureCLI@2
   displayName: Start AKS Preprod
   inputs:
     azureSubscription: 'spn-azure-preprod-subscription-contributor'
-    scriptType: 'batch'
+    scriptType: 'ps'
     scriptLocation: 'inlineScript'
-    inlineScript: 'echo "starting-aks cluster Preprod"'
+    inlineScript: 'Write-Host "starting-aks cluster Preprod"'
     # inlineScript: 'az aks start --name aks-aksservices-preprod-weu --resource-group rg-aksservices-preprod-weu'
