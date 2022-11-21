@@ -20,16 +20,16 @@ steps:
   displayName: Start AKS Test
   inputs:
     azureSubscription: 'spn-azure-test-subscription-contributor'
-    scriptType: 'ps'
+    scriptType: 'batch'
     scriptLocation: 'inlineScript'
-    inlineScript: 'Write-Host "starting-aks cluster Test"'
+    inlineScript: 'echo "starting-aks cluster Test"'
     # inlineScript: 'az aks start --name aks-aksservices-test-weu --resource-group rg-aksservices-test-weu'
   
 - task: AzureCLI@2
   displayName: Start AKS Preprod
   inputs:
     azureSubscription: 'spn-azure-preprod-subscription-contributor'
-    scriptType: 'ps'
+    scriptType: 'batch'
     scriptLocation: 'inlineScript'
-    inlineScript: 'Write-Host "starting-aks cluster Preprod"'
+    inlineScript: 'echo "starting-aks cluster Preprod"'
     # inlineScript: 'az aks start --name aks-aksservices-preprod-weu --resource-group rg-aksservices-preprod-weu'
