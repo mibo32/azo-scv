@@ -16,7 +16,8 @@ schedules:
     include:
     - main
   always: true
-
+pr: none
+trigger: none
 steps:
 - task: AzureCLI@2
   displayName: Start AKS Test
