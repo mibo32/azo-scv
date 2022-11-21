@@ -24,14 +24,13 @@ steps:
     azureSubscription: 'spn-azure-test-subscription-contributor'
     scriptType: 'ps'
     scriptLocation: 'inlineScript'
-    inlineScript: 'Write-Host "Stopping test"'
-    # inlineScript: 'az aks stop --name aks-aksservices-test-weu --resource-group rg-aksservices-test-weu'
+    inlineScript: 'az aks stop --name aks-aksservices-test-weu --resource-group rg-aksservices-test-weu'
   
-- task: AzureCLI@2
-  displayName: Stop AKS Preprod
-  inputs:
-    azureSubscription: 'spn-azure-preprod-subscription-contributor'
-    scriptType: 'ps'
-    scriptLocation: 'inlineScript'
-    inlineScript: 'Write-Host "Stopping test"'
-    # inlineScript: 'az aks stop --name aks-aksservices-preprod-weu --resource-group rg-aksservices-preprod-weu'
+# - task: AzureCLI@2
+#   displayName: Stop AKS Preprod
+#   inputs:
+#     azureSubscription: 'spn-azure-preprod-subscription-contributor'
+#     scriptType: 'ps'
+#     scriptLocation: 'inlineScript'
+#     inlineScript: 'Write-Host "Stopping test"'
+#     # inlineScript: 'az aks stop --name aks-aksservices-preprod-weu --resource-group rg-aksservices-preprod-weu'
