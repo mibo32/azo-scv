@@ -13,7 +13,9 @@ schedules:
   always: true
 
 pool:
-  vmImage: ubuntu-latest
+  name: AzureDeploy
+pr: none
+trigger: none
 
 steps:
 - task: AzureCLI@2
