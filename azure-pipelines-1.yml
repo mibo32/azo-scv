@@ -9,13 +9,13 @@
 pool:
   name: AzureDeploy
 
-schedules:
-- cron: '0 5 * * 1-5'
-  displayName: Stop AKS TestPreprod
-  branches:
-    include:
-    - main
-  always: true
+# schedules:
+# - cron: '0 5 * * 1-5'
+#   displayName: Stop AKS TestPreprod
+#   branches:
+#     include:
+#     - main
+#   always: true
 pr: none
 trigger: none
 steps:
