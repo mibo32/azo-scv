@@ -18,4 +18,4 @@ pool:
 
 steps:
 - script: |
-    docker image prune
+    docker image prune -a --force
