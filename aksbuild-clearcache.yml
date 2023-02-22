@@ -19,3 +19,4 @@ pool:
 steps:
 - script: |
     docker image prune -a --force
+    docker builder prune --force
