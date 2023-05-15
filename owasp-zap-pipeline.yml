@@ -7,11 +7,10 @@ trigger:
 - none
 
 pool:
-  name: AzureDeploy
+  name: AksBuild
 
 steps:
 - script: |
-    echo "pipelien is not working"
     docker run --name scan-curity ictu/zap2docker-weekly zap-baseline.py -I -j -t https://identity-dev.carnegie.se -r testreport-api.html -x OWASP-ZAP-Report.xml
     docker cp scan-api:/zap/wrk/ $(Agent.TempDirectory) 
     docker stop scan-curity
