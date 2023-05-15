@@ -7,7 +7,7 @@ trigger:
 - none
 
 pool:
-  name: AksBuild
+  name: AksServices
 
 steps:
 - script: |
