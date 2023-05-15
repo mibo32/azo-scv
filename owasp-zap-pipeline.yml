@@ -16,7 +16,7 @@ steps:
     docker cp scan-api:/zap/wrk/ $(Agent.TempDirectory) 
     docker stop scan-curity
     docker container rm scan-curity
-displayName: 'Run a multi-line script'
+  displayName: 'Run a multi-line script'
 
 - task: PublishTestResults@2
   inputs:
