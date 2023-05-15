@@ -7,13 +7,28 @@ trigger:
 - main
 
 pool:
-  vmImage: ubuntu-latest
+  name: AzureDeploy
 
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
+    - script: |
+
+        docker run --name scan-curity -t ictu/zap2docker-weekly zap-baseline.py -I -j -t https://identity-dev.carnegie.se -r testreport-api.html -x OWASP-ZAP-Report.xml
+        docker cp scan-api:/zap/wrk/ $(Agent.TempDirectory) 
+        docker stop scan-curity
+        docker container rm scan-curity
   displayName: 'Run a multi-line script'
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'NUnit'
+    testResultsFiles: '$(Build.ArtifactStagingDirectory)/Converted-OWASP-ZAP-Report.xml'
+    # searchFolder: '$(Build.ArtifactStagingDirectory)/testresults'
+    failTaskOnFailedTests: true
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Agent.TempDirectory)/wrk'
+    artifact: 'owaspresults'
+    publishLocation: 'pipeline'
