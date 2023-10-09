@@ -4,7 +4,7 @@
 # https://aka.ms/yaml
 
 schedules:
-- cron: '0 0 * * SAT'
+- cron: '30 2 * * *'
   displayName: Clear docker cache
   branches:
     include:
