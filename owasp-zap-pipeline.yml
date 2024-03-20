@@ -36,3 +36,16 @@ steps:
       az config set extension.use_dynamic_install=yes_without_prompt
       az devops configure --defaults organization="$AzureDevOpsOrganizationUrl" project="$AzureDevOpsProjectName"
     pwsh: true
+
+- task: PowerShell@2
+  displayName: test
+  inputs:
+    targetType: inline
+    script: |
+      $AzureDevOpsProjectName = "Infrastructure"
+      $connectionName = "mibo-conn"
+      $AzureDevOpsOrganizationUrl = "https://dev.azure.com/carnegieinvestmentbank"
+      az config set extension.use_dynamic_install=yes_without_prompt
+      az devops configure --defaults organization="$AzureDevOpsOrganizationUrl" project="$AzureDevOpsProjectName"
+  env:
+    AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)
