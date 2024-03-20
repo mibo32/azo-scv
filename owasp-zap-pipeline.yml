@@ -6,9 +6,11 @@
 trigger:
 - none
 
-pool:
-  name: AksServices
+# pool:
+#   name: AksServices
 
+pool:
+  vmImage: 'windows-latest'
 steps:
 # - script: |
 #     docker run --name scan-curity -t ictu/zap2docker-weekly zap-baseline.py -I -j -t https://identity-dev.carnegie.se -r testreport-api.html -x OWASP-ZAP-Report.xml
