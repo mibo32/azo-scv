@@ -10,21 +10,29 @@ pool:
   name: AksServices
 
 steps:
-- script: |
-    docker run --name scan-curity -t ictu/zap2docker-weekly zap-baseline.py -I -j -t https://identity-dev.carnegie.se -r testreport-api.html -x OWASP-ZAP-Report.xml
-    docker cp scan-curity:/zap/wrk/ $(Agent.TempDirectory) 
-    docker stop scan-curity
-    docker container rm scan-curity
-  displayName: 'Run a multi-line script'
+# - script: |
+#     docker run --name scan-curity -t ictu/zap2docker-weekly zap-baseline.py -I -j -t https://identity-dev.carnegie.se -r testreport-api.html -x OWASP-ZAP-Report.xml
+#     docker cp scan-curity:/zap/wrk/ $(Agent.TempDirectory) 
+#     docker stop scan-curity
+#     docker container rm scan-curity
+#   displayName: 'Run a multi-line script'
 
-- task: PublishTestResults@2
+# - task: PublishTestResults@2
+#   inputs:
+#     testResultsFormat: 'NUnit'
+#     testResultsFiles: '$(Build.ArtifactStagingDirectory)/Converted-OWASP-ZAP-Report.xml'
+#     # searchFolder: '$(Build.ArtifactStagingDirectory)/testresults'
+#     failTaskOnFailedTests: true
+# - task: PublishPipelineArtifact@1
+#   inputs:
+#     targetPath: '$(Agent.TempDirectory)/wrk'
+#     artifact: 'owaspresults'
+#     publishLocation: 'pipeline'
+- task: PowerShell@2
   inputs:
-    testResultsFormat: 'NUnit'
-    testResultsFiles: '$(Build.ArtifactStagingDirectory)/Converted-OWASP-ZAP-Report.xml'
-    # searchFolder: '$(Build.ArtifactStagingDirectory)/testresults'
-    failTaskOnFailedTests: true
-- task: PublishPipelineArtifact@1
-  inputs:
-    targetPath: '$(Agent.TempDirectory)/wrk'
-    artifact: 'owaspresults'
-    publishLocation: 'pipeline'
+    targetType: 'inline'
+    script: |
+      # Write your PowerShell commands here.
+      az config set extension.use_dynamic_install=yes_without_prompt
+      az devops configure --defaults organization="$AzureDevOpsOrganizationUrl" project="$AzureDevOpsProjectName"
+    pwsh: true
