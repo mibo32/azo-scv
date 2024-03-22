@@ -39,7 +39,7 @@ steps:
       az config set extension.use_dynamic_install=yes_without_prompt
       az devops configure --defaults organization="$AzureDevOpsOrganizationUrl" project="$AzureDevOpsProjectName"
       dir
-      az devops service-endpoint create --service-endpoint-configuration ./svc.json
+      
     pwsh: true
 
 - task: PowerShell@2
@@ -52,6 +52,7 @@ steps:
       $AzureDevOpsOrganizationUrl = "https://dev.azure.com/carnegieinvestmentbank"
       az config set extension.use_dynamic_install=yes_without_prompt
       az devops configure --defaults organization="$AzureDevOpsOrganizationUrl" project="$AzureDevOpsProjectName"
+      az devops service-endpoint create --service-endpoint-configuration ./svc.json
 
      
   env:
