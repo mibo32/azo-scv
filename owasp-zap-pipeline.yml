@@ -6,11 +6,11 @@
 trigger:
 - none
 
-# pool:
-#   name: AksServices
-
 pool:
-  vmImage: 'windows-latest'
+  name: AksServices
+
+# pool:
+#   vmImage: 'windows-latest'
 steps:
 - checkout: self
 # - script: |
@@ -32,21 +32,11 @@ steps:
 #     artifact: 'owaspresults'
 #     publishLocation: 'pipeline'
 - task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: |
-      # Write your PowerShell commands here.
-      az config set extension.use_dynamic_install=yes_without_prompt
-      az devops configure --defaults organization="$AzureDevOpsOrganizationUrl" project="$AzureDevOpsProjectName"
-      dir
-      
-    pwsh: true
-
-- task: PowerShell@2
   displayName: test
   inputs:
     targetType: inline
     script: |
+      az extension add --name devops
       $AzureDevOpsProjectName = "Infrastructure"
       $connectionName = "mibo-conn"
       $AzureDevOpsOrganizationUrl = "https://dev.azure.com/carnegieinvestmentbank"
