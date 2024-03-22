@@ -1,0 +1,51 @@
+{
+    "authorization": {
+        "parameters": {
+            "workloadIdentityFederationSubject": "sc://carnegieinvestmentbank/Infrastructure/aaa",
+            "workloadIdentityFederationIssuer": "https://vstoken.dev.azure.com/9b61bbd2-ab2c-43cf-87db-ecb4043d9e9c",
+            "serviceprincipalid": "91bc19fb-eb45-4978-a13f-9f094c3b52ca",
+            "tenantid": "904e2f8f-5832-43bf-aea8-7cbfde1c5d4c"
+        },
+        "scheme": "WorkloadIdentityFederation"
+    },
+    "createdBy": {
+        "displayName": "Mihai Borz",
+        "url": "https://spsprodweu4.vssps.visualstudio.com/A13a6bbf6-1b0b-42ca-b65b-9169106219c3/_apis/Identities/d23054bd-ab18-6159-8cfa-cccf826d8c94",
+        "_links": {
+            "avatar": {
+                "href": "https://dev.azure.com/carnegieinvestmentbank/_apis/GraphProfile/MemberAvatars/aad.ZDIzMDU0YmQtYWIxOC03MTU5LThjZmEtY2NjZjgyNmQ4Yzk0"
+            }
+        },
+        "id": "d23054bd-ab18-6159-8cfa-cccf826d8c94",
+        "uniqueName": "mihbor@carnegie.se",
+        "imageUrl": "https://dev.azure.com/carnegieinvestmentbank/_apis/GraphProfile/MemberAvatars/aad.ZDIzMDU0YmQtYWIxOC03MTU5LThjZmEtY2NjZjgyNmQ4Yzk0",
+        "descriptor": "aad.ZDIzMDU0YmQtYWIxOC03MTU5LThjZmEtY2NjZjgyNmQ4Yzk0"
+    },
+    "data": {
+        "environment": "AzureCloud",
+        "scopeLevel": "Subscription",
+        "creationMode": "Manual",
+        "isDraft": "True",
+        "subscriptionId": "aa414772-374c-49d8-a9b6-865873f7c11a",
+        "subscriptionName": "sub-dev"
+    },
+    "id": "bbc96d95-4a93-4d49-8f9a-977e211e103d",
+    "isReady": false,
+    "isShared": false,
+    "isOutdated": false,
+    "name": null,
+    "owner": "library",
+    "type": "azurerm",
+    "url": "https://management.azure.com/",
+    "description": null,
+    "serviceEndpointProjectReferences": [
+        {
+            "description": "asdasd",
+            "name": "aaa",
+            "projectReference": {
+                "id": "4b0b6fd5-31cd-4a7a-ad05-eeb9f206c087",
+                "name": "Infrastructure"
+            }
+        }
+    ]
+}
