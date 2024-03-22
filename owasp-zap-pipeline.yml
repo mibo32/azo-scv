@@ -6,11 +6,11 @@
 trigger:
 - none
 
-pool:
-  name: AksServices
-
 # pool:
-#   vmImage: 'windows-latest'
+#  name: AksServices
+
+pool:
+  vmImage: 'windows-latest'
 steps:
 - checkout: self
 # - script: |
@@ -46,4 +46,4 @@ steps:
 
      
   env:
-    AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)
+    AZURE_DEVOPS_EXT_PAT: $(pat)
