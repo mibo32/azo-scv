@@ -6,11 +6,11 @@
 trigger:
 - none
 
-# pool:
-#  name: AksServices
-
 pool:
-  vmImage: 'windows-latest'
+  name: AksServices
+
+# pool:
+#   vmImage: 'windows-latest'
 steps:
 - checkout: self
 # - script: |
@@ -36,7 +36,7 @@ steps:
   inputs:
     targetType: inline
     script: |
-      # az extension add --name devops
+      az extension add --name azure-devops
       $AzureDevOpsProjectName = "Infrastructure"
       $connectionName = "mibo-conn"
       $AzureDevOpsOrganizationUrl = "https://dev.azure.com/carnegieinvestmentbank"
