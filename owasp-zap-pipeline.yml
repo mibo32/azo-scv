@@ -12,6 +12,7 @@ trigger:
 pool:
   vmImage: 'windows-latest'
 steps:
+- checkout: self
 # - script: |
 #     docker run --name scan-curity -t ictu/zap2docker-weekly zap-baseline.py -I -j -t https://identity-dev.carnegie.se -r testreport-api.html -x OWASP-ZAP-Report.xml
 #     docker cp scan-curity:/zap/wrk/ $(Agent.TempDirectory) 
@@ -49,5 +50,7 @@ steps:
       $AzureDevOpsOrganizationUrl = "https://dev.azure.com/carnegieinvestmentbank"
       az config set extension.use_dynamic_install=yes_without_prompt
       az devops configure --defaults organization="$AzureDevOpsOrganizationUrl" project="$AzureDevOpsProjectName"
+
+      az devops service-endpoint create --service-endpoint-configuration ./svx.json
   env:
     AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)
