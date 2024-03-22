@@ -36,7 +36,7 @@ steps:
   inputs:
     targetType: inline
     script: |
-      az extension add --name devops
+      # az extension add --name devops
       $AzureDevOpsProjectName = "Infrastructure"
       $connectionName = "mibo-conn"
       $AzureDevOpsOrganizationUrl = "https://dev.azure.com/carnegieinvestmentbank"
